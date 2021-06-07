@@ -6,7 +6,7 @@ It is based on the [SynatxGym](https://cpllab.github.io/syntaxgym-core/) framewo
 
 ## Requirements
 
-Install SyntaxGym as described [here](https://cpllab.github.io/syntaxgym-core/)
+Install SyntaxGym as described [here](https://cpllab.github.io/syntaxgym-core/) (requires Python>=3.7)
 
 ## Test suite generation
 
@@ -34,13 +34,14 @@ which is able to encode different notions of coherence should find more surprisi
 Models can be evaluated using the syntaxGym pipeline as follows
 
 ```
-syntaxgym run gpt2 /path/to/test_suite
-syntaxgym run DialoGPT-medium /path/to/test_suite
+syntaxgym run gpt2 /path/to/test_suite > gpt2_test-suite.results
+syntaxgym run DialoGPT-medium /path/to/test_suite > dialogpt_test-suite.results
 ```
+where the .results files will contain a per-item evalaution of whether the prediction specified in the test suite was met (True or False).
 
-Currently, only the evaluation of GPT-2 is supported in the official installation of syntaxgym. The pull request for DialoGPT is pending and we are still trying to fix some compatibility issues with other models in [´lm-zoo´](https://cpllab.github.io/lm-zoo/), on which SyntaxGym is based. Information on how to include DialoGPT locally can be found in models/Readme.md. 
+Currently, only the evaluation of GPT-2 is supported in the official installation of syntaxgym. The pull request for DialoGPT is pending and we are still trying to fix some compatibility issues with other models in [`lm-zoo`](https://cpllab.github.io/lm-zoo/), on which SyntaxGym is based. Information on how to include DialoGPT locally can be found in models/Readme.md. 
 
-We further plan to add more models to ´lm-zoo´ in order to evaluate the impact of different model sizes and architectures. 
+We further plan to add more models to `lm-zoo` in order to evaluate the impact of different model sizes and architectures. 
 
 
 ## Citation
