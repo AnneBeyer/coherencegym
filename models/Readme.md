@@ -10,21 +10,14 @@ Availabe models are:
 
 Model | Tag
 ----- | ---
-DialoGPT-small | dialogpt-small:dialogpt-small
 DialoGPT-medium | dialogpt-medium:dialogpt-medium
-DialoGPT-large | dialogpt-large:dialogpt-large
-T5-small | t5-small:t5-small
-T5-base | t5-base:t5-base
-T5-large | t5-large:t5-large
-T5-3b | t5-3b:t5-3b
-T5-11b | t5-11b:t5-11b
-RobertaUSR | robertausr:robertausr
+
 
 ## DialoGPT-medium as example
 1. Navigate to the `DialoGPT/DialoGPT-medium` directory.
 1. Build the docker image: `docker build . --tag=dialogpt-medium:dialogpt-medium`. Make sure to give the image this exact tag, as `lm-zoo` finds the image through the tag.
-1. Now you can run syntaxgym like so: `syntaxgym run DialoGPT-medium /path/to/test_suite`.
-The setup for the other models works analogously.
+1. Now you can run syntaxgym: `syntaxgym run DialoGPT-medium /path/to/test_suite`.
+The setup for other models works analogously.
 
 # Including another model as docker image
 1. Copy the directory `DialoGPT-medium` to `NewModel`.
@@ -32,11 +25,11 @@ The setup for the other models works analogously.
    1. Change the filepath `/opt/dialogpt-medium` (e.g. in line 20) to `/opt/newmodel` (just for clarity).
    1. Replace the download urls in the `curl` commands with the urls for the new model.
       * As of transformers 4.0.0, you can find the urls by going into the `file_utils.py` of your `transformers` installation and inserting a print statement in the function `url_to_filename` to print the url.
-      * Open a python shell, import transformers, and create the model and tokenizer, that you want. E.g. `tr.AutoTokenizer.from_pretrained("microsoft/DialoGPT-medium")` and `tr.AutoModel.from_pretrained("microsoft/DialoGPT-medium")`.
+      * Open a python shell, import transformers, and create the model and tokenizer, that you want. E.g. `AutoTokenizer.from_pretrained("microsoft/DialoGPT-medium")` and `AutoModel.from_pretrained("microsoft/DialoGPT-medium")`.
       * This will give you a number of possible urls. However, not all of these files exist for each model. Therefore, you should try and download each file manually (`curl url`). If it returns an error like `The specified key does not exist.`, you can ignore that url. It is also possible that curl gives an output like `Found. Redirecting to https://...`. In that case, use the different url given there.
       * Include the found urls in the dockerfile.
    1. Possibly update the versions for PyTorch and the various pip installs to versions working with the new model.
-1. Change `bin/spec`:
+1. Change `bin/spec` (this will update the template `spec.template.json`)
    1. Change the path for the AutoTokenizer to `/opt/newmodel` (or whatever you set in the dockerfile).
    1. Update the other information about the model as needed. Pay special attention to the `"sentinel_pattern"` of the tokenizer as setting this incorrectly can lead to errors in splitting the results into `syntaxgym` regions.
 1. Change `get_surprisals.py`:
@@ -51,6 +44,3 @@ The setup for the other models works analogously.
   1. Update the `tokenize` and `unkify` functions, to deal with `[SEP]` tokens in the same way as in `get_surprisals.py`. This is neccessary, because the tokenizer will return different results, depending on how the input is split. So if these functions don't match with `get_surprisals.py`, it will cause an error in `syntaxgym`.
 1. If you only keep your docker image locally: Change `models.py` for `lm_zoo`.
    1. Add an entry for you new model to the `add_registry` dict. You can mostly copy the one for DialoGPT, but change name, tag, and shortname, so that `lm_zoo` can recognize the new docker image.
-
-# Before uploading an image to `lm-zoo`
-Make sure to update the file `spec.template.json` in the directory of the model with the relevant information about the model. I haven't done this so far, since the models still keep changing.
