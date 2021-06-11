@@ -7,7 +7,7 @@ RUN apt-get -y update \
 
 # Root of model directory relative to the build context.
 # set to models/DialoGPT/DialoGPT-medium before submitting to lm-zoo
-ARG MODEL_ROOT=models/DialoGPT/DialoGPT-medium
+ARG MODEL_ROOT=.
 ARG COMMIT
 # Test dependencies
 RUN pip install nose jsonschema
