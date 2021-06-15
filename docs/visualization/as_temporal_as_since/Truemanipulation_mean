@@ -1,0 +1,174 @@
+(function() {
+  var fn = function() {
+    
+    (function(root) {
+      function now() {
+        return new Date();
+      }
+    
+      var force = false;
+    
+      if (typeof root._bokeh_onload_callbacks === "undefined" || force === true) {
+        root._bokeh_onload_callbacks = [];
+        root._bokeh_is_loading = undefined;
+      }
+    
+      
+      
+    
+      var element = document.getElementById("95a4455e-fc39-4fa4-816c-d3d7cd4a7fe7");
+        if (element == null) {
+          console.warn("Bokeh: autoload.js configured with elementid '95a4455e-fc39-4fa4-816c-d3d7cd4a7fe7' but no matching script tag was found.")
+        }
+      
+    
+      function run_callbacks() {
+        try {
+          root._bokeh_onload_callbacks.forEach(function(callback) {
+            if (callback != null)
+              callback();
+          });
+        } finally {
+          delete root._bokeh_onload_callbacks
+        }
+        console.debug("Bokeh: all callbacks have finished");
+      }
+    
+      function load_libs(css_urls, js_urls, callback) {
+        if (css_urls == null) css_urls = [];
+        if (js_urls == null) js_urls = [];
+    
+        root._bokeh_onload_callbacks.push(callback);
+        if (root._bokeh_is_loading > 0) {
+          console.debug("Bokeh: BokehJS is being loaded, scheduling callback at", now());
+          return null;
+        }
+        if (js_urls == null || js_urls.length === 0) {
+          run_callbacks();
+          return null;
+        }
+        console.debug("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
+        root._bokeh_is_loading = css_urls.length + js_urls.length;
+    
+        function on_load() {
+          root._bokeh_is_loading--;
+          if (root._bokeh_is_loading === 0) {
+            console.debug("Bokeh: all BokehJS libraries/stylesheets loaded");
+            run_callbacks()
+          }
+        }
+    
+        function on_error(url) {
+          console.error("failed to load " + url);
+        }
+    
+        for (let i = 0; i < css_urls.length; i++) {
+          const url = css_urls[i];
+          const element = document.createElement("link");
+          element.onload = on_load;
+          element.onerror = on_error.bind(null, url);
+          element.rel = "stylesheet";
+          element.type = "text/css";
+          element.href = url;
+          console.debug("Bokeh: injecting link tag for BokehJS stylesheet: ", url);
+          document.body.appendChild(element);
+        }
+    
+        const hashes = {"https://cdn.bokeh.org/bokeh/release/bokeh-2.3.0.min.js": "HjagQp6T0/7bxYTAXbLotF1MLAGWmhkY5siA1Gc/pcEgvgRPtMsRn0gQtMwGKiw1", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.0.min.js": "ZEPPTjL+mdyqgIq+/pl9KTwzji8Kow2NnI3zWY8+sFinWP/SYJ80BnfeJsa45iYj", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.0.min.js": "exLqv2ACDRIaV7ZK1iL8aGzGYQvKVuT3U2CT7FsQREBxRah6JrkVCoFy0koY1YqV"};
+    
+        for (let i = 0; i < js_urls.length; i++) {
+          const url = js_urls[i];
+          const element = document.createElement('script');
+          element.onload = on_load;
+          element.onerror = on_error.bind(null, url);
+          element.async = false;
+          element.src = url;
+          if (url in hashes) {
+            element.crossOrigin = "anonymous";
+            element.integrity = "sha384-" + hashes[url];
+          }
+          console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+          document.head.appendChild(element);
+        }
+      };
+    
+      function inject_raw_css(css) {
+        const element = document.createElement("style");
+        element.appendChild(document.createTextNode(css));
+        document.body.appendChild(element);
+      }
+    
+      
+      var js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-2.3.0.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.0.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.0.min.js"];
+      var css_urls = [];
+      
+    
+      var inline_js = [
+        function(Bokeh) {
+          Bokeh.set_log_level("info");
+        },
+        
+        function(Bokeh) {
+          (function() {
+            var fn = function() {
+              Bokeh.safely(function() {
+                (function(root) {
+                  function embed_document(root) {
+                    
+                  var docs_json = '{"603e75e3-4bb1-440e-a47e-9e1554ac3609":{"defs":[{"extends":null,"module":null,"name":"DataModel","overrides":[],"properties":[]}],"roots":{"references":[{"attributes":{"booleans":[true,true,true,true,true,true,true,true,true,true]},"id":"42752","type":"BooleanFilter"},{"attributes":{},"id":"42798","type":"Selection"},{"attributes":{"axis":{"id":"42763"},"ticker":null},"id":"42765","type":"Grid"},{"attributes":{},"id":"42793","type":"AllLabels"},{"attributes":{"bottom_units":"screen","fill_alpha":0.5,"fill_color":"lightgrey","left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"right_units":"screen","syncable":false,"top_units":"screen"},"id":"42776","type":"BoxAnnotation"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"#1f77b4"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"top":{"field":"y"},"width":{"value":0.3},"x":{"field":"x"}},"id":"42788","type":"VBar"},{"attributes":{},"id":"42774","type":"ResetTool"},{"attributes":{},"id":"42773","type":"SaveTool"},{"attributes":{"end":645.766},"id":"42754","type":"Range1d"},{"attributes":{"overlay":{"id":"42776"}},"id":"42772","type":"BoxZoomTool"},{"attributes":{"below":[{"id":"42763"}],"center":[{"id":"42765"},{"id":"42769"},{"id":"42784"}],"height":400,"left":[{"id":"42766"}],"renderers":[{"id":"42789"}],"title":{"id":"42790"},"toolbar":{"id":"42777"},"width":800,"x_range":{"id":"42756"},"x_scale":{"id":"42759"},"y_range":{"id":"42754"},"y_scale":{"id":"42761"}},"id":"42755","subtype":"Figure","type":"Plot"},{"attributes":{"active_multi":null,"tools":[{"id":"42770"},{"id":"42771"},{"id":"42772"},{"id":"42773"},{"id":"42774"},{"id":"42775"}]},"id":"42777","type":"Toolbar"},{"attributes":{},"id":"42775","type":"HelpTool"},{"attributes":{"level":"glyph","source":{"id":"42751"},"text":{"field":"y"},"x":{"field":"x"},"x_offset":{"value":-13.5},"y":{"field":"y"}},"id":"42784","type":"LabelSet"},{"attributes":{"axis_label":"Models","formatter":{"id":"42794"},"major_label_policy":{"id":"42793"},"ticker":{"id":"42764"}},"id":"42763","type":"CategoricalAxis"},{"attributes":{"axis":{"id":"42766"},"dimension":1,"ticker":null},"id":"42769","type":"Grid"},{"attributes":{},"id":"42796","type":"AllLabels"},{"attributes":{},"id":"42764","type":"CategoricalTicker"},{"attributes":{},"id":"42761","type":"LinearScale"},{"attributes":{},"id":"42794","type":"CategoricalTickFormatter"},{"attributes":{},"id":"42771","type":"WheelZoomTool"},{"attributes":{"factors":["DialoGPT-small","DialoGPT-medium","DialoGPT-large","RobertaUSR","T5-small","T5-base","T5-large","Bert-base","Bert-large","Bert-vlm"]},"id":"42756","type":"FactorRange"},{"attributes":{"fill_color":{"value":"#1f77b4"},"line_color":{"value":"#1f77b4"},"top":{"field":"y"},"width":{"value":0.3},"x":{"field":"x"}},"id":"42787","type":"VBar"},{"attributes":{},"id":"42799","type":"UnionRenderers"},{"attributes":{"axis_label":"True results manipulation mean","formatter":{"id":"42797"},"major_label_policy":{"id":"42796"},"ticker":{"id":"42767"}},"id":"42766","type":"LinearAxis"},{"attributes":{},"id":"42759","type":"CategoricalScale"},{"attributes":{},"id":"42797","type":"BasicTickFormatter"},{"attributes":{"data_source":{"id":"42751"},"glyph":{"id":"42787"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"42788"},"view":{"id":"42753"}},"id":"42789","type":"GlyphRenderer"},{"attributes":{},"id":"42790","type":"Title"},{"attributes":{},"id":"42767","type":"BasicTicker"},{"attributes":{"filters":[{"id":"42752"}],"source":{"id":"42751"}},"id":"42753","type":"CDSView"},{"attributes":{},"id":"42770","type":"PanTool"},{"attributes":{"data":{"x":["DialoGPT-small","DialoGPT-medium","DialoGPT-large","RobertaUSR","T5-small","T5-base","T5-large","Bert-base","Bert-large","Bert-vlm"],"y":{"__ndarray__":"ZDvfT437YkASg8DKoRVhQIlBYOXQCmJA16NwPQoHc0DByqFFtntTQBkEVg4twkxALbKd76fGSUC28/3UeEOAQGDl0CLbpXtAFK5H4XpYgkA=","dtype":"float64","order":"little","shape":[10]}},"selected":{"id":"42798"},"selection_policy":{"id":"42799"}},"id":"42751","type":"ColumnDataSource"}],"root_ids":["42755"]},"title":"Bokeh Application","version":"2.3.0"}}';
+                  var render_items = [{"docid":"603e75e3-4bb1-440e-a47e-9e1554ac3609","root_ids":["42755"],"roots":{"42755":"95a4455e-fc39-4fa4-816c-d3d7cd4a7fe7"}}];
+                  root.Bokeh.embed.embed_items(docs_json, render_items);
+                
+                  }
+                  if (root.Bokeh !== undefined) {
+                    embed_document(root);
+                  } else {
+                    var attempts = 0;
+                    var timer = setInterval(function(root) {
+                      if (root.Bokeh !== undefined) {
+                        clearInterval(timer);
+                        embed_document(root);
+                      } else {
+                        attempts++;
+                        if (attempts > 100) {
+                          clearInterval(timer);
+                          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+                        }
+                      }
+                    }, 10, root)
+                  }
+                })(window);
+              });
+            };
+            if (document.readyState != "loading") fn();
+            else document.addEventListener("DOMContentLoaded", fn);
+          })();
+        },
+        function(Bokeh) {
+        
+        
+        }
+      ];
+    
+      function run_inline_js() {
+        
+        for (var i = 0; i < inline_js.length; i++) {
+          inline_js[i].call(root, root.Bokeh);
+        }
+        
+      }
+    
+      if (root._bokeh_is_loading === 0) {
+        console.debug("Bokeh: BokehJS loaded, going straight to plotting");
+        run_inline_js();
+      } else {
+        load_libs(css_urls, js_urls, function() {
+          console.debug("Bokeh: BokehJS plotting callback run at", now());
+          run_inline_js();
+        });
+      }
+    }(window));
+  };
+  if (document.readyState != "loading") fn();
+  else document.addEventListener("DOMContentLoaded", fn);
+})();
