@@ -77,8 +77,17 @@ where the .results files will contain a per-item evaluation of whether the predi
 Currently, only the evaluation of GPT-2 is supported in the official installation of syntaxgym. The pull request for DialoGPT is pending and we are still trying to fix some compatibility issues with other models in [`lm-zoo`](https://cpllab.github.io/lm-zoo/), on which SyntaxGym is based. Information on how to include DialoGPT locally can be found in models/Readme.md. 
 
 To evaluate on several models on all (or selected) test suites run
-```python eval.py``` 
-```TODO: Add more detailed description!```
+```python eval.py {run,show,visualize}```.
+
+The eval script acts in three different modes:
+* run: ```python eval.py run [-h] [--config CONFIG] output_directory```, which runs models on suites and saves the results to csv files.
+* show: ```python eval.py show [-h] [--config CONFIG] {models,suites} [suite-type]```, which shows available models and suites. When showing suites, it will show directories containing types of suites (see below for how to setup suites in directories). Set suite_type to show individual suites of type. Showing models will list all models in lm_zoo, including the ones not made specifically for dialogue suites. You can still evaluate the models on the suites, but the results will be of questionable value.
+* visualize: ```python eval.py visualize [-h] [--config CONFIG] [--outdir OUTDIR] inpath```, which creates js-tags to include in a website to visualize the results on the test suites. ```inpath``` give the path to the output of ```run```. If no ```outdir``` is given, the script will show the visualizations on your device. I don't know what happens if you try that on a system with no GUI, like a server.
+
+The script is governed by a ```config.ini```, which contains three items:
+* ```suitespath``` ... path to the available test suites. Suites must be organized in a directory, which contains subdirectories for each type of suite you want to use. The subdirectories than each contain suites in json-files.
+* ```suitenames``` ... list of suites to use with one entry per line. Each entry can be either a type of suite (i.e. one of the subdirectory), the name of a particular suite, or a path (relative to ```suitespath```) to a suite-file. If no suites are given, the script will evaluate on all suites in ```suitespath```.
+* ```models``` ... list of models to use with one entry per line. Each entry must be the name of a model in lm_zoo, to be used with syntaxgym.
 
 We further plan to add more models to `lm-zoo` in order to evaluate the impact of different model sizes and architectures. 
 
